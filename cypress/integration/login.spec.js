@@ -28,7 +28,7 @@ describe('login', function () {
 
     })
 
-    context.only('quando o usuario é muito bom mas a senha é ruim', function () {
+    context('quando o usuario é muito bom mas a senha é ruim', function () {
 
 
         let user = {
@@ -57,6 +57,37 @@ describe('login', function () {
 
     })
 
+    context.only('quando o formato do email é invalido', function () {
+        const emails = [
+            'pedro.com.br',
+            '@gmail.com',
+            '@',
+            'pedro@',
+            '12345',
+            '&¨¨&&*',
+            'xpto123',
+        ]
 
+        before(function () {
+
+            loginPage.go()
+        })
+
+        emails.forEach(function (email) {
+            it('Não deve logar com o email: ' + email, function () {
+
+                const user = { email: email, password: 'pwd123' }
+
+                loginPage.form(user)
+                loginPage.submit()
+                loginPage.alertHaveText('Informe um email válido')
+
+            })
+
+
+        })
+
+
+    })
 
 })
