@@ -28,7 +28,7 @@ describe('login', function () {
 
     })
 
-    context('quando o usuario é muito bom mas a senha é ruim', function () {
+    context.only('quando o usuario é muito bom mas a senha é ruim', function () {
 
 
         let user = {
@@ -57,7 +57,7 @@ describe('login', function () {
 
     })
 
-    context.only('quando o formato do email é invalido', function () {
+    context('quando o formato do email é invalido', function () {
         const emails = [
             'pedro.com.br',
             '@gmail.com',
@@ -80,13 +80,36 @@ describe('login', function () {
 
                 loginPage.form(user)
                 loginPage.submit()
-                loginPage.alertHaveText('Informe um email válido')
+                loginPage.alert.HaveText('Informe um email válido')
 
             })
 
+        })
+
+    })
+
+    context('quando não preencho nenhum dos campos', function () {
+
+        const alertMessages = [
+
+            'E-mail é obrigatório',
+            'Senha é obrigatória',
+        ]
+
+        before(function () {
+            loginPage.go()
+            loginPage.submit()
 
         })
 
+        alertMessages.forEach(function (alert) {
+
+            it('deve exibir ' + alert.toLocaleLowerCase(), function () {
+                loginPage.alert.HaveText(alert)
+
+            })
+
+        })
 
     })
 

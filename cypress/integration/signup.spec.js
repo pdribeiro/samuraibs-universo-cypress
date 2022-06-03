@@ -65,7 +65,7 @@ describe('Cadastro', function () {
             signuPage.go()
             signuPage.form(user)
             signuPage.submit()
-            signuPage.alertHaveText('Informe um email válido')
+            signuPage.alert.HaveText('Informe um email válido')
 
         })
 
@@ -92,7 +92,7 @@ describe('Cadastro', function () {
         })
 
         afterEach(() => {
-            signuPage.alertHaveText('Pelo menos 6 caracteres')
+            signuPage.alert.HaveText('Pelo menos 6 caracteres')
         })
     })
 
@@ -114,7 +114,7 @@ describe('Cadastro', function () {
         alertMessages.forEach(function (alert) {
 
             it('deve exibir ' + alert.toLocaleLowerCase(), function () {
-                signuPage.alertHaveText(alert)
+                signuPage.alert.HaveText(alert)
 
             })
 
