@@ -22,22 +22,40 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-const configJson = require(config.configFile)
+  const configJson = require(config.configFile)
 
-const pool = new Pool(configJson.dbconfig)
+  const pool = new Pool(configJson.dbconfig)
 
-on('task', {
-  removeUser(email){
-    return new Promise(function(resolve){
-      pool.query('DELETE FROM public.users WHERE email = $1',[email], function(error,result){
-        if (error){
-          throw error
-        }
-        resolve({sucess: result})
+  on('task', {
+    removeUser(email) {
+      return new Promise(function (resolve) {
+        pool.query('DELETE FROM public.users WHERE email = $1', [email], function (error, result) {
+          if (error) {
+            throw error
+          }
+          resolve({ sucess: result })
+        })
       })
-    })
 
-  }
-})
+    },
+    findToken(email) {
+      return new Promise(function (resolve) {
+        pool.query('select B.token from ' +
+          ' public.users A ' +
+          '  INNER JOIN public.user_tokens B' +
+          '  ON A.id = B.user_id ' +
+          '  WHERE A.email = $1 ' +
+          '  ORDER BY b.created_at', [email], function (error, result) {
+            if (error) {
+              throw error
+            }
+            resolve({ sucess: result.rows[0].token})
+          })
+
+      })
+
+    }
+
+  })
 
 }

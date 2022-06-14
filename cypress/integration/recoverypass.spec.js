@@ -23,9 +23,25 @@ describe('resgate de sebga ', function () {
 
             fpPage.toast.shouldHaveText(message)
 
+        })
+
+    })
+
+    context.only('quando o usuario solicita o resgate ', function () {
+        before(function () {
+            cy.postUser(this.date)
+            cy.recoveryPass(this.date.email)
 
         })
 
-    });
+        it('deve poder cadastrar uma nova senha ', function () {
+
+            console.log(Cypress.env('recoveryToken'))
+
+
+
+        })
+
+    })
 
 });
