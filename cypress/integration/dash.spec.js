@@ -32,7 +32,7 @@ describe('dashboard', function () {
             const day = Cypress.env('appointmentDay')
             dashPage.selecDay(day)
 
-            dash.appointmentShouldBe(customer,appointmentHour)
+            dash.appointmentShouldBe(customer,appointment.hour)
 
         })
     })
